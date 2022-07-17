@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+<!--     1:properties配置-->
+<!--    <properties resource="db.properties">-->
+<!--        <property name="username" value="root"/>-->
+<!--        <property name="pwd" value="1234567"/>-->
+<!--    </properties>-->
+
+
+    <!--2:typeAliases 别名类,方便把那些重复写的包命名,节省代码量-->
+    <!--    一-->
+    <typeAliases>
+        <typeAlias type="com.badistricia.pojo.Person" alias="Person"/>
+
+        <!--        或者直接扫描某个包，把这个包下的所有类名字的首字母小写形式作为其别名，很方便！-->
+        <package name="com.badistricia.pojo"/>
+    </typeAliases>
+
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC" />
+            <dataSource type="POOLED">
+                <property name="driver" value="oracle.jdbc.OracleDriver" />
+                <property name="url" value="jdbc:oracle:thin:@localhost:1521:ORCL2" />
+                <property name="username" value="badistricia" />
+                <property name="password" value="1234567" />
+            </dataSource>
+        </environment>
+    </environments>
+
+
+    <!--    每一个mapper.xml都需要在mybatis核心配置文件中注册,mapper是映射，数据库映射到后台 -->
+    <mappers>
+        <!--        更推荐这个-->
+        <mapper resource="com/badistricia/dao/PersonMapper.xml"/>
+        <!--       必须和方法类在同一个包下
+               <mapper class="com.badistricia.dao.Usermapper"/>
+                    必须和方法类在同一个包下
+              <package name="com.badistricia.dao"/>-->
+    </mappers>
+
+</configuration>
