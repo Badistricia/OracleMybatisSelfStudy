@@ -1,7 +1,9 @@
 package com.badistricia.dao;
 
 import com.badistricia.pojo.Person;
+
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -14,5 +16,11 @@ import java.util.List;
 @Mapper
 public interface PersonMapper {
     List<Person> getAllPerson();
+    Boolean insertPerson(@Param("list") List<Person> personList);
+    Person getPersonByID(int id);
+    Boolean insert(Person person);
 
+    Boolean update(Person person);
+
+    Boolean delete(int id);
 }

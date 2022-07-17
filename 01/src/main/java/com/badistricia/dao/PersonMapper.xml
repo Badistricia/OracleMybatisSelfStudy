@@ -5,8 +5,38 @@
 <!--namespace for Dao.mapper interface-->
 <mapper namespace="com.badistricia.dao.PersonMapper">
 
-    <select id="getAllPerson" resultType="com.badistricia.pojo.Person">
-        select * from "PERSON1" t
+    <resultMap id="BaseMap" type="com.badistricia.pojo.Person">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="gender" property="gender"/>
+    </resultMap>
+    <!--    传递进去一个User对象，可以直接取出来-->
+    <insert id="insertPerson" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into "PERSON1" (name,gender)
+        values
+            <foreach collection="list" item="person" index="index" separator=",">
+                (#{person.name},#{person.gender})
+            </foreach>
+    </insert>
+
+    <insert id="insert" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+        insert into person1(id, name, gender) values(person_seq.nextval, #{name}, #{gender})
+    </insert>
+
+    <update id="update">
+        update PERSON1 set name = #{name},gender = #{gender} where id = #{id}
+    </update>
+    <delete id="delete">
+        delete
+        from "PERSON1"
+        where id = #{id}
+    </delete>
+
+    <select id="getAllPerson" resultMap="BaseMap">
+        select * from "PERSON1"
+    </select>
+    <select id="getPersonByID" resultType="com.badistricia.pojo.Person">
+        select * from "PERSON1" where id = #{id}
     </select>
 
 </mapper>
